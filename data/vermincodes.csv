@@ -1,0 +1,16 @@
+STARTDATE,ENDDATE,CODE,DESC
+7/26/10,12/31/99,04K,Evidence of rats or live rats present in facility's food and/or non-food areas.
+2/18/05,12/31/99,04L,Evidence of rats or live rats present in facility's food and/or non-food areas.
+3/24/03,7/26/10,04M,Evidence of mice or live mice present in facility's food and/or non-food areas.
+7/26/10,12/31/99,04M,Live roaches present in facility's food and/or non-food areas.
+3/24/03,2/17/05,04N,Evidence of mice or live mice present in facility.
+2/18/05,7/25/10,04N,Evidence of roaches or live roaches present in facility's food and/or non-food areas.
+7/26/10,12/31/99,04N,"Filth flies or food/refuse/sewage-associated (FRSA) flies present in facility’s food and/or non-food areas. Filth flies include house flies, little house flies, blow flies, bottle flies and flesh flies. Food/refuse/sewage-associated flies include fruit flies, drain flies and Phorid flies."
+3/24/03,2/17/05,04O,Evidence of roaches or live roaches present in facility.
+2/18/05,7/25/07,04O,Evidence of flying insects or live flying insects present in facility's food and/or non-food areas.
+7/26/10,12/31/99,04O,Live animals other than fish in tank or service animal present in facility's food and/or non-food areas.
+3/24/03,2/17/05,04P,Evidence of or live flies/other insects present in facility.
+2/18/05,7/25/10,04P,Other live animal present in facility's food and/or non-food areas.
+3/24/03,2/17/05,04Q,Live animal present in facility.
+1/1/01,3/23/03,06G,"Live animal present in food storage, preparation or service area. Citation may include and is not limited to cockroaches, flies, mice, rats, cats, and dogs."
+1/1/01,3/23/03,10A,Vermin or other live animal present in non-food area.
