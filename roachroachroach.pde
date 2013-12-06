@@ -20,19 +20,31 @@ void setup() {
   restaurants = loadTable("Restaurant-Inspections.csv", "header");
   violations = loadTable("vermincodes.csv", "header");
 
+  // for matching the violation dates from the restaurant database to the ones in the violation database
+  SimpleDateFormat restDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+  SimpleDateFormat violStartDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+  SimpleDateFormat violEndDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
   for (TableRow row : restaurants.rows()) {
-    String name = row.getString("DBA");
-    String violCode = row.getString("VIOLCODE");
-    String grade = row.getString("CURRENTGRADE");
-    Restaurants restaurant = new Restaurants(name, violCode, grade);
-    restList.add(restaurant);
+    Restaurants r = new Restaurants();
+    r.name = row.getString("DBA");
+    r.violCode = row.getString("VIOLCODE");
+    r.grade = row.getString("CURRENTGRADE");
+    r.dateString = row.getString("INSPDATE");
+    r.restDate =
+      restList.add(r);
   }
 
   for (TableRow row : violations.rows()) {
+    Violcodes v = new Violcodes();
     String violationText = row.getString("DESC");
     String violCode = row.getString("CODE");
-    Violcodes violation = new Violcodes(violationText, violCode);
-    violList.add(violation);
+    String startDateString = row.getString("STARTDATE");
+    String endDateString = row.getString("ENDDATE");
+
+    v.violStartDate =
+      v.violEndDate = 
+      violList.add(v);
   }
 
   searchAgrade();
@@ -88,7 +100,7 @@ void searchCgrade() {
       }
     }
   }
-   float percentage = (violCount/restCount) * 100;
+  float percentage = (violCount/restCount) * 100;
   println("There are " + (int) restCount + " C-graded establishments and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
 }
 
@@ -103,13 +115,12 @@ void searchGradePending() {
       }
     }
   }
-   float percentage = (violCount/restCount) * 100;
+  float percentage = (violCount/restCount) * 100;
   println("There are " + (int) restCount + " Grade Pending establishments and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
 }
 
 // Borough searching functions
 
 void searchManhattan() {
-  
 }
 
