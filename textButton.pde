@@ -17,6 +17,7 @@ class textButton {
     pos.y = y;
   }
 
+//for interactive text
   void write() { 
     pushMatrix();
     pushStyle();
@@ -28,15 +29,23 @@ class textButton {
     }
     else {
       mouse = false;
-      fill(255);
+      fill(160);
     }
     text(text, pos.x, pos.y);
     popMatrix();
     popStyle();
   }
   
-  void displayData() {
-    
+  //for non-interactive text
+  void staticWrite(){
+    fill(255);
+    text(text, pos.x,pos.y);
   }
+  
+  int giveWidth() {
+   int textW = (int) textWidth(text);
+    return(textW);
+  }
+  
 }
 
