@@ -1,14 +1,17 @@
 class Grade {
   int restTotal;
   int restViol;
+  int recentViol;
+  float recentPercentage;
   float percentage;
   
   
-  Grade(int t_total, int t_viol, float t_percentage) {
+  Grade(int t_total, int t_viol, int t_recent, float t_percentage, float t_recentPercent) {
     restTotal = t_total;
     restViol = t_viol;
+    recentViol = t_recent;
     percentage = t_percentage;
-    
+    recentPercentage = t_recentPercent;
   }
   
   void displayData(String grade) {

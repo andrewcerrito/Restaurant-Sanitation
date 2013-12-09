@@ -1,8 +1,9 @@
 
 // Credits:
 // Christina Carter helped with clickable text!
-// Brenner helped with booleans!
-// Val convinced me to keep working on this instead of printing out miniature restaurant bar areas!
+// Sam Brenner helped with nested menus that no longer exist!
+// Valerie Chen convinced me to keep working on this 
+//   instead of printing out miniature restaurant bar areas like an insane person!
 
 
 import java.util.Date;
@@ -20,7 +21,7 @@ PFont menuFont;
 
 long lastClickTime = 0;
 
-Grade gradeA, gradeB, gradeC;
+Grade gradeA, gradeB, gradeC, gradeP;
 textButton gradeTitle, boroughTitle, gradeAbutton, gradeBbutton, gradeCbutton, gradePbutton, manhattanbutton, queensbutton, brooklynbutton, bronxbutton, SIbutton;
 
 boolean gradeBool, boroughBool, aBool, bBool, cBool, pBool, manhattanBool, queensBool, brooklynBool, bronxBool, SIBool;
@@ -38,6 +39,11 @@ boolean[] gradeBools = {
 boolean[] boroughBools = {
   manhattanBool, queensBool, brooklynBool, bronxBool, SIBool
 };
+
+// Defines what starting date counts as "recent" to determine recent vermin violations
+String checkRecent = "12-01-2012";
+Date isRecent;
+// float recentEpoch;
 
 void setup() {
   size(1280, 720, P3D);
@@ -57,6 +63,18 @@ void setup() {
   SimpleDateFormat restDate = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'");
   SimpleDateFormat violStartDate = new SimpleDateFormat("MM-dd-yyyy");
   SimpleDateFormat violEndDate = new SimpleDateFormat("MM-dd-yyyy");
+  SimpleDateFormat recentYears = new SimpleDateFormat("MM-dd-yyyy");
+
+
+  // To check for recent violations, we need to turn the beginning of recent times into an epoch number.
+  try {
+    isRecent = recentYears.parse(checkRecent);
+  }
+  catch (Exception e) {
+    println("Error parsing recent date: " + e);
+  }
+  // float recentEpoch = isRecent.getTime();
+
 
   // initialize and fill restaurant data
   for (TableRow row : restaurants.rows()) {
@@ -163,11 +181,11 @@ void textSense() {
     println("grade A button working!!");
     gradeA.displayData("A");
   }
-    else if (gradeBbutton.mouse && mouseClicked) {
+  else if (gradeBbutton.mouse && mouseClicked) {
     println("grade B button working!!");
   }
   mouseClicked = false;
- // mouseBufferOK = false;
+  // mouseBufferOK = false;
 }
 
 
@@ -241,6 +259,7 @@ void mouseClicked() {
 void searchAgrade() {
   float violCount = 0;
   float restCount = 0;
+  float recentCount = 0;
   for (Restaurants r: restList) {
     float inspectionTime = r.restDate.getTime();
     if (r.grade.equals("A")) {
@@ -248,22 +267,33 @@ void searchAgrade() {
       for (Violcodes v: violList) {
         float startRange = v.violStartDate.getTime();
         float endRange = v.violEndDate.getTime();
+        float recentEpoch = isRecent.getTime();
         if (r.violCode.equals(v.violCode)) {
           if (inspectionTime >= startRange && inspectionTime <= endRange) {
             violCount++;
+            if (inspectionTime >= recentEpoch) {
+              recentCount++;
+            }
           }
         }
       }
     }
   }
   float percentage = (violCount/restCount) * 100;
-  gradeA = new Grade((int) restCount, (int) violCount, percentage);
+  float recentPercentage = (recentCount/violCount) * 100;
+  int cockroachNumber = round(percentage);
+  int sizeRatio = round(map(recentPercentage, 0, 100, 0, cockroachNumber));
+  gradeA = new Grade((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage);
   println("There are " + (int) restCount + " A-graded establishments and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
+  println((int) recentCount + " of these violations occurred within the past year. This is " + recentPercentage + "% of all violations for this group.");
+  println(cockroachNumber + " cockroaches should go in this scene. " + sizeRatio + " of them should be large.");
+  println();
 }
 
 void searchBgrade() {
   float violCount = 0;
   float restCount = 0;
+  float recentCount = 0;
   for (Restaurants r: restList) {
     float inspectionTime = r.restDate.getTime();
     if (r.grade.equals("B")) {
@@ -271,22 +301,33 @@ void searchBgrade() {
       for (Violcodes v: violList) {
         float startRange = v.violStartDate.getTime();
         float endRange = v.violEndDate.getTime();
+        float recentEpoch = isRecent.getTime();
         if (r.violCode.equals(v.violCode)) {
           if (inspectionTime >= startRange && inspectionTime <= endRange) {
             violCount++;
+            if (inspectionTime >= recentEpoch) {
+              recentCount++;
+            }
           }
         }
       }
     }
   }
   float percentage = (violCount/restCount) * 100;
-  gradeB = new Grade((int) restCount, (int) violCount, percentage);
+  float recentPercentage = (recentCount/violCount) * 100;
+  int cockroachNumber = round(percentage);
+  int sizeRatio = round(map(recentPercentage, 0, 100, 0, cockroachNumber));
+  gradeB = new Grade((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage);
   println("There are " + (int) restCount + " B-graded establishments and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
+  println((int)recentCount + " of these violations occurred within the past year. This is " + recentPercentage + "% of all violations for this group.");
+  println(cockroachNumber + " cockroaches should go in this scene. " + sizeRatio + " of them should be large.");
+  println();
 }
 
 void searchCgrade() {
   float violCount = 0;
   float restCount = 0;
+  float recentCount = 0;
   for (Restaurants r: restList) {
     float inspectionTime = r.restDate.getTime();
     if (r.grade.equals("C")) {
@@ -294,40 +335,61 @@ void searchCgrade() {
       for (Violcodes v: violList) {
         float startRange = v.violStartDate.getTime();
         float endRange = v.violEndDate.getTime();
+        float recentEpoch = isRecent.getTime();
         if (r.violCode.equals(v.violCode)) {
           if (inspectionTime >= startRange && inspectionTime <= endRange) {
             violCount++;
+            if (inspectionTime >= recentEpoch) {
+              recentCount++;
+            }
           }
         }
       }
     }
   }
   float percentage = (violCount/restCount) * 100;
-  gradeC = new Grade((int) restCount, (int) violCount, percentage);
+  float recentPercentage = (recentCount/violCount) * 100;
+  int cockroachNumber = round(percentage);
+  int sizeRatio = round(map(recentPercentage, 0, 100, 0, cockroachNumber));
+  gradeC = new Grade((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage);
   println("There are " + (int) restCount + " C-graded establishments and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
+  println((int) recentCount + " of these violations occurred within the past year. This is " + recentPercentage + "% of all violations for this group.");
+  println(cockroachNumber + " cockroaches should go in this scene. " + sizeRatio + " of them should be large.");
+  println();
 }
 
 void searchGradePending() {
   float violCount = 0;
   float restCount = 0;
+  float recentCount = 0;
   for (Restaurants r: restList) {
     float inspectionTime = r.restDate.getTime();
-    if (r.grade.equals("P") || r.grade.equals("Z")) {
+    if (r.grade.equals("P")) {
       restCount++;
       for (Violcodes v: violList) {
         float startRange = v.violStartDate.getTime();
         float endRange = v.violEndDate.getTime();
+        float recentEpoch = isRecent.getTime();
         if (r.violCode.equals(v.violCode)) {
           if (inspectionTime >= startRange && inspectionTime <= endRange) {
             violCount++;
+            if (inspectionTime >= recentEpoch) {
+              recentCount++;
+            }
           }
         }
       }
     }
   }
   float percentage = (violCount/restCount) * 100;
-  Grade gradeP = new Grade((int) restCount, (int) violCount, percentage);
+  float recentPercentage = (recentCount/violCount) * 100;
+  int cockroachNumber = round(percentage);
+  int sizeRatio = round(map(recentPercentage, 0, 100, 0, cockroachNumber));
+  gradeP = new Grade((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage);
   println("There are " + (int) restCount + " Grade Pending establishments and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
+  println((int) recentCount + " of these violations occurred within the past year. This is " + recentPercentage + "% of all violations for this group.");
+  println(cockroachNumber + " cockroaches should go in this scene. " + sizeRatio + " of them should be large.");
+  println();
 }
 
 
@@ -355,6 +417,7 @@ void searchManhattan() {
   float percentage = (violCount/restCount) * 100;
   Borough manhattan = new Borough((int) restCount, (int) violCount, percentage);
   println("There are " + (int) restCount + " restaurants in Manhattan and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
+  println();
 }
 
 void searchQueens() {
@@ -378,6 +441,7 @@ void searchQueens() {
   float percentage = (violCount/restCount) * 100;
   Borough queens = new Borough((int) restCount, (int) violCount, percentage);
   println("There are " + (int) restCount + " restaurants in Queens and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
+  println();
 }
 
 void searchBrooklyn() {
@@ -401,6 +465,7 @@ void searchBrooklyn() {
   float percentage = (violCount/restCount) * 100;
   Borough brooklyn = new Borough((int) restCount, (int) violCount, percentage);
   println("There are " + (int) restCount + " restaurants in Brooklyn and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
+  println();
 }
 
 void searchBronx() {
@@ -424,6 +489,7 @@ void searchBronx() {
   float percentage = (violCount/restCount) * 100;
   Borough bronx = new Borough((int) restCount, (int) violCount, percentage);
   println("There are " + (int) restCount + " restaurants in the Bronx and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
+  println();
 }
 
 void searchSI() {
@@ -447,5 +513,6 @@ void searchSI() {
   float percentage = (violCount/restCount) * 100;
   Borough SI = new Borough((int) restCount, (int) violCount, percentage);
   println("There are " + (int) restCount + " restaurants in Staten Island and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
+  println();
 }
 
