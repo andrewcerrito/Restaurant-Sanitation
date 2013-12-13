@@ -3,7 +3,7 @@
 // Christina Carter helped with clickable text!
 // Sam Brenner helped with nested menus that no longer exist!
 // Valerie Chen convinced me to keep working on this 
-//   instead of printing out miniature restaurant bar areas like an insane person!
+// instead of printing out miniature restaurant bar areas like an insane person!
 
 
 import java.util.Date;
@@ -27,18 +27,30 @@ textButton gradeTitle, boroughTitle, gradeAbutton, gradeBbutton, gradeCbutton, g
 boolean gradeBool, boroughBool, aBool, bBool, cBool, pBool, manhattanBool, queensBool, brooklynBool, bronxBool, SIBool;
 boolean mouseBufferOK = false;
 boolean mouseClicked = false;
+boolean aData, bData, cData, pendData, manhattanData, queensData, brooklynData, bronxData, SIData  = false;
+//boolean[] dataBools = {aData, bData, cData, pendData, manhattanData, queensData, brooklynData, bronxData, SIData};
 
+HashMap<String,Boolean> dataBools = new HashMap<String,Boolean>();
+dataBools.put("aData", false);
+dataBools.put("bData", false);
+dataBools.put("cData", false);
+dataBools.put("pendData", false);
+dataBools.put("manhattanData", false);
+dataBools.put("queensData", false);
+dataBools.put("brooklynData", false);
+dataBools.put("bronxData", false);
+dataBools.put("SIData", false);
 
 // boolean category arrays
-boolean[] displayBools= {
-  aBool, bBool, cBool, pBool, manhattanBool, queensBool, brooklynBool, bronxBool, SIBool
-};
-boolean[] gradeBools = {
-  aBool, bBool, cBool, pBool
-};
-boolean[] boroughBools = {
-  manhattanBool, queensBool, brooklynBool, bronxBool, SIBool
-};
+//boolean[] displayBools= {
+//  aBool, bBool, cBool, pBool, manhattanBool, queensBool, brooklynBool, bronxBool, SIBool
+//};
+//boolean[] gradeBools = {
+//  aBool, bBool, cBool, pBool
+//};
+//boolean[] boroughBools = {
+//  manhattanBool, queensBool, brooklynBool, bronxBool, SIBool
+//};
 
 // Defines what starting date counts as "recent" to determine recent vermin violations
 String checkRecent = "12-01-2012";
@@ -51,6 +63,7 @@ void setup() {
   smooth();
   menuFont = createFont("AvenirNext-UltraLight", 24);
   //menuFont = createFont("AvenirNextCondensed-UltraLight", 24);
+
 
 
   textFont(menuFont);
@@ -179,11 +192,29 @@ void textSense() {
 
   if (gradeAbutton.mouse && mouseClicked) {
     println("grade A button working!!");
-    gradeA.displayData("A");
-  }
+    dataBools.put("aData", !dataBools.get("aData"));
+    
+    for(Map.Entry me : dataBools.entrySet()) {
+      dataBools.put(me.getKey(), false); 
+    }
+    
   else if (gradeBbutton.mouse && mouseClicked) {
     println("grade B button working!!");
+    dataBools[1] = !dataBools[1];
+    for (int i =0; i < dataBools.length; i++) {
+     if( i != 1) dataBools[i] = false;
+    }
   }
+
+  else if (gradeCbutton.mouse && mouseClicked) {
+    cData = !cData;
+  }
+
+  gradeA.displayData("A", aData);
+  gradeB.displayData("B", bData);
+  gradeC.displayData("C", cData);
+  gradeP.displayData("Pending", pendData);
+
   mouseClicked = false;
   // mouseBufferOK = false;
 }
