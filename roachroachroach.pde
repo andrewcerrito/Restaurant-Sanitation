@@ -8,6 +8,7 @@
 
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.Map;
 
 Table restaurants;
 Table violations;
@@ -30,16 +31,8 @@ boolean mouseClicked = false;
 boolean aData, bData, cData, pendData, manhattanData, queensData, brooklynData, bronxData, SIData  = false;
 //boolean[] dataBools = {aData, bData, cData, pendData, manhattanData, queensData, brooklynData, bronxData, SIData};
 
-HashMap<String,Boolean> dataBools = new HashMap<String,Boolean>();
-dataBools.put("aData", false);
-dataBools.put("bData", false);
-dataBools.put("cData", false);
-dataBools.put("pendData", false);
-dataBools.put("manhattanData", false);
-dataBools.put("queensData", false);
-dataBools.put("brooklynData", false);
-dataBools.put("bronxData", false);
-dataBools.put("SIData", false);
+HashMap<String, Boolean> dataBools = new HashMap<String, Boolean>();
+
 
 // boolean category arrays
 //boolean[] displayBools= {
@@ -64,7 +57,15 @@ void setup() {
   menuFont = createFont("AvenirNext-UltraLight", 24);
   //menuFont = createFont("AvenirNextCondensed-UltraLight", 24);
 
-
+  dataBools.put("aData", false);
+  dataBools.put("bData", false);
+  dataBools.put("cData", false);
+  dataBools.put("pendData", false);
+  dataBools.put("manhattanData", false);
+  dataBools.put("queensData", false);
+  dataBools.put("brooklynData", false);
+  dataBools.put("bronxData", false);
+  dataBools.put("SIData", false);
 
   textFont(menuFont);
   textInit();
@@ -193,27 +194,46 @@ void textSense() {
   if (gradeAbutton.mouse && mouseClicked) {
     println("grade A button working!!");
     dataBools.put("aData", !dataBools.get("aData"));
-    
-    for(Map.Entry me : dataBools.entrySet()) {
-      dataBools.put(me.getKey(), false); 
+
+    for (Map.Entry me : dataBools.entrySet()) {
+      String whatever = (String) me.getKey();
+      if (whatever != "aData") dataBools.put(whatever, false);
     }
-    
+  }
+
   else if (gradeBbutton.mouse && mouseClicked) {
     println("grade B button working!!");
-    dataBools[1] = !dataBools[1];
-    for (int i =0; i < dataBools.length; i++) {
-     if( i != 1) dataBools[i] = false;
+    dataBools.put("bData", !dataBools.get("bData"));
+
+    for (Map.Entry me : dataBools.entrySet()) {
+      String whatever = (String) me.getKey();
+      if (whatever != "bData") dataBools.put(whatever, false);
     }
   }
 
   else if (gradeCbutton.mouse && mouseClicked) {
-    cData = !cData;
+ println("grade C button working!!");
+    dataBools.put("cData", !dataBools.get("cData"));
+
+    for (Map.Entry me : dataBools.entrySet()) {
+      String whatever = (String) me.getKey();
+      if (whatever != "cData") dataBools.put(whatever, false);
+    }
+  }
+  else if (gradePbutton.mouse && mouseClicked) {
+ println("grade B button working!!");
+    dataBools.put("pendData", !dataBools.get("pendData"));
+
+    for (Map.Entry me : dataBools.entrySet()) {
+      String whatever = (String) me.getKey();
+      if (whatever != "pendData") dataBools.put(whatever, false);
+    }
   }
 
-  gradeA.displayData("A", aData);
-  gradeB.displayData("B", bData);
-  gradeC.displayData("C", cData);
-  gradeP.displayData("Pending", pendData);
+  gradeA.displayData("A", "aData");
+  gradeB.displayData("B", "bData");
+  gradeC.displayData("C", "cData");
+  gradeP.displayData("Pending", "pendData");
 
   mouseClicked = false;
   // mouseBufferOK = false;

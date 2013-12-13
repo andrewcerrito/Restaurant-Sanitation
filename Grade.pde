@@ -14,7 +14,9 @@ class Grade {
     recentPercentage = t_recentPercent;
   }
 
-  void displayData(String grade, boolean dataTrigger) {
+  void displayData(String grade, String hashmapKey) {
+    boolean dataTrigger = dataBools.get(hashmapKey);
+    println("data trigger is" + dataTrigger);
     if (dataTrigger) {
       if (grade == "Pending") text("For all Grade Pending restaurants:", 20,20);
       else { text("For all " + grade +"-grade restaurants:", 20, 20);}
