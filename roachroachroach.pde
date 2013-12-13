@@ -23,32 +23,22 @@ PFont menuFont;
 long lastClickTime = 0;
 
 Grade gradeA, gradeB, gradeC, gradeP;
+Borough manhattan, queens, brooklyn, bronx, SI;
 textButton gradeTitle, boroughTitle, gradeAbutton, gradeBbutton, gradeCbutton, gradePbutton, manhattanbutton, queensbutton, brooklynbutton, bronxbutton, SIbutton;
 
 boolean gradeBool, boroughBool, aBool, bBool, cBool, pBool, manhattanBool, queensBool, brooklynBool, bronxBool, SIBool;
 boolean mouseBufferOK = false;
 boolean mouseClicked = false;
-boolean aData, bData, cData, pendData, manhattanData, queensData, brooklynData, bronxData, SIData  = false;
-//boolean[] dataBools = {aData, bData, cData, pendData, manhattanData, queensData, brooklynData, bronxData, SIData};
+boolean aData, bData, cData, pendData, manhattanData, queensData, brooklynData, bronxData, SIData;
 
 HashMap<String, Boolean> dataBools = new HashMap<String, Boolean>();
 
-
-// boolean category arrays
-//boolean[] displayBools= {
-//  aBool, bBool, cBool, pBool, manhattanBool, queensBool, brooklynBool, bronxBool, SIBool
-//};
-//boolean[] gradeBools = {
-//  aBool, bBool, cBool, pBool
-//};
-//boolean[] boroughBools = {
-//  manhattanBool, queensBool, brooklynBool, bronxBool, SIBool
-//};
 
 // Defines what starting date counts as "recent" to determine recent vermin violations
 String checkRecent = "12-01-2012";
 Date isRecent;
 // float recentEpoch;
+
 
 void setup() {
   size(1280, 720, P3D);
@@ -177,6 +167,7 @@ void textInit() {
   SIbutton = new textButton("SI", left+1190, th);
 }
 
+
 void textSense() {
 
   gradeTitle.staticWrite();
@@ -191,6 +182,8 @@ void textSense() {
   bronxbutton.write();
   SIbutton.write();
 
+
+  // Displaying and hiding appropriate data when grade items are clicked
   if (gradeAbutton.mouse && mouseClicked) {
     println("grade A button working!!");
     dataBools.put("aData", !dataBools.get("aData"));
@@ -212,7 +205,7 @@ void textSense() {
   }
 
   else if (gradeCbutton.mouse && mouseClicked) {
- println("grade C button working!!");
+    println("grade C button working!!");
     dataBools.put("cData", !dataBools.get("cData"));
 
     for (Map.Entry me : dataBools.entrySet()) {
@@ -221,7 +214,7 @@ void textSense() {
     }
   }
   else if (gradePbutton.mouse && mouseClicked) {
- println("grade B button working!!");
+    println("grade Pending button working!!");
     dataBools.put("pendData", !dataBools.get("pendData"));
 
     for (Map.Entry me : dataBools.entrySet()) {
@@ -229,11 +222,65 @@ void textSense() {
       if (whatever != "pendData") dataBools.put(whatever, false);
     }
   }
+  
+  // Displaying and hiding appropriate data if borough items are clicked
+  if (manhattanbutton.mouse && mouseClicked) {
+    println("manhattan button working!!");
+    dataBools.put("manhattanData", !dataBools.get("manhattanData"));
+
+    for (Map.Entry me : dataBools.entrySet()) {
+      String whatever = (String) me.getKey();
+      if (whatever != "manhattanData") dataBools.put(whatever, false);
+    }
+  }
+
+  else if (queensbutton.mouse && mouseClicked) {
+    println("queens button working!!");
+    dataBools.put("queensData", !dataBools.get("queensData"));
+
+    for (Map.Entry me : dataBools.entrySet()) {
+      String whatever = (String) me.getKey();
+      if (whatever != "queensData") dataBools.put(whatever, false);
+    }
+  }
+
+  else if (brooklynbutton.mouse && mouseClicked) {
+ println("brooklyn button working!!");
+    dataBools.put("brooklynData", !dataBools.get("brooklynData"));
+
+    for (Map.Entry me : dataBools.entrySet()) {
+      String whatever = (String) me.getKey();
+      if (whatever != "brooklynData") dataBools.put(whatever, false);
+    }
+  }
+  else if (bronxbutton.mouse && mouseClicked) {
+ println("bronx button working!!");
+    dataBools.put("bronxData", !dataBools.get("bronxData"));
+
+    for (Map.Entry me : dataBools.entrySet()) {
+      String whatever = (String) me.getKey();
+      if (whatever != "bronxData") dataBools.put(whatever, false);
+    }
+  }
+  else if (SIbutton.mouse && mouseClicked) {
+ println("SI button working!!");
+    dataBools.put("SIData", !dataBools.get("SIData"));
+
+    for (Map.Entry me : dataBools.entrySet()) {
+      String whatever = (String) me.getKey();
+      if (whatever != "SIData") dataBools.put(whatever, false);
+    }
+  }
 
   gradeA.displayData("A", "aData");
   gradeB.displayData("B", "bData");
   gradeC.displayData("C", "cData");
   gradeP.displayData("Pending", "pendData");
+  manhattan.displayData("Manhattan", "manhattanData");
+  queens.displayData("Queens", "queensData");
+  brooklyn.displayData("Brooklyn", "brooklynData");
+  bronx.displayData("The Bronx", "bronxData");
+  SI.displayData("Staten Island", "SIData");
 
   mouseClicked = false;
   // mouseBufferOK = false;
@@ -466,7 +513,7 @@ void searchManhattan() {
     }
   }
   float percentage = (violCount/restCount) * 100;
-  Borough manhattan = new Borough((int) restCount, (int) violCount, percentage);
+  manhattan = new Borough((int) restCount, (int) violCount, percentage);
   println("There are " + (int) restCount + " restaurants in Manhattan and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
   println();
 }
@@ -490,7 +537,7 @@ void searchQueens() {
     }
   }
   float percentage = (violCount/restCount) * 100;
-  Borough queens = new Borough((int) restCount, (int) violCount, percentage);
+  queens = new Borough((int) restCount, (int) violCount, percentage);
   println("There are " + (int) restCount + " restaurants in Queens and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
   println();
 }
@@ -514,7 +561,7 @@ void searchBrooklyn() {
     }
   }
   float percentage = (violCount/restCount) * 100;
-  Borough brooklyn = new Borough((int) restCount, (int) violCount, percentage);
+  brooklyn = new Borough((int) restCount, (int) violCount, percentage);
   println("There are " + (int) restCount + " restaurants in Brooklyn and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
   println();
 }
@@ -538,7 +585,7 @@ void searchBronx() {
     }
   }
   float percentage = (violCount/restCount) * 100;
-  Borough bronx = new Borough((int) restCount, (int) violCount, percentage);
+  bronx = new Borough((int) restCount, (int) violCount, percentage);
   println("There are " + (int) restCount + " restaurants in the Bronx and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
   println();
 }
@@ -562,7 +609,7 @@ void searchSI() {
     }
   }
   float percentage = (violCount/restCount) * 100;
-  Borough SI = new Borough((int) restCount, (int) violCount, percentage);
+  SI = new Borough((int) restCount, (int) violCount, percentage);
   println("There are " + (int) restCount + " restaurants in Staten Island and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
   println();
 }
