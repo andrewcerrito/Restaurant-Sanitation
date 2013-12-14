@@ -18,7 +18,11 @@ ArrayList<Violcodes> violList = new ArrayList();
 //BufferedReader reader;
 //PrintWriter writer;
 
+// Fonts
 PFont menuFont;
+PFont bigNumbers;
+PFont headerFont;
+
 
 long lastClickTime = 0;
 
@@ -43,8 +47,10 @@ Date isRecent;
 void setup() {
   size(1280, 720, P3D);
   background(0);
-  smooth();
+  smooth(2);
   menuFont = createFont("AvenirNext-UltraLight", 24);
+  headerFont = createFont("AvenirNext-UltraLight", 36);
+  bigNumbers = createFont("AvenirNext", 90);
   //menuFont = createFont("AvenirNextCondensed-UltraLight", 24);
 
   dataBools.put("aData", false);
@@ -222,7 +228,7 @@ void textSense() {
       if (whatever != "pendData") dataBools.put(whatever, false);
     }
   }
-  
+
   // Displaying and hiding appropriate data if borough items are clicked
   if (manhattanbutton.mouse && mouseClicked) {
     println("manhattan button working!!");
@@ -245,7 +251,7 @@ void textSense() {
   }
 
   else if (brooklynbutton.mouse && mouseClicked) {
- println("brooklyn button working!!");
+    println("brooklyn button working!!");
     dataBools.put("brooklynData", !dataBools.get("brooklynData"));
 
     for (Map.Entry me : dataBools.entrySet()) {
@@ -254,7 +260,7 @@ void textSense() {
     }
   }
   else if (bronxbutton.mouse && mouseClicked) {
- println("bronx button working!!");
+    println("bronx button working!!");
     dataBools.put("bronxData", !dataBools.get("bronxData"));
 
     for (Map.Entry me : dataBools.entrySet()) {
@@ -263,7 +269,7 @@ void textSense() {
     }
   }
   else if (SIbutton.mouse && mouseClicked) {
- println("SI button working!!");
+    println("SI button working!!");
     dataBools.put("SIData", !dataBools.get("SIData"));
 
     for (Map.Entry me : dataBools.entrySet()) {
@@ -272,10 +278,10 @@ void textSense() {
     }
   }
 
-  gradeA.displayData("A", "aData");
-  gradeB.displayData("B", "bData");
-  gradeC.displayData("C", "cData");
-  gradeP.displayData("Pending", "pendData");
+  gradeA.displayData("Grade A", "aData");
+  gradeB.displayData("Grade B", "bData");
+  gradeC.displayData("Grade C", "cData");
+  gradeP.displayData("Grade Pending", "pendData");
   manhattan.displayData("Manhattan", "manhattanData");
   queens.displayData("Queens", "queensData");
   brooklyn.displayData("Brooklyn", "brooklynData");
@@ -497,6 +503,7 @@ void searchGradePending() {
 void searchManhattan() {
   float violCount = 0;
   float restCount = 0;
+  float recentCount = 0;
   for (Restaurants r: restList) {
     float inspectionTime = r.restDate.getTime();
     if (r.boroCode.equals("1")) {
@@ -504,16 +511,21 @@ void searchManhattan() {
       for (Violcodes v: violList) {
         float startRange = v.violStartDate.getTime();
         float endRange = v.violEndDate.getTime();
+        float recentEpoch = isRecent.getTime();
         if (r.violCode.equals(v.violCode)) {
           if (inspectionTime >= startRange && inspectionTime <= endRange) {
             violCount++;
+             if (inspectionTime >= recentEpoch) {
+              recentCount++;
+            }
           }
         }
       }
     }
   }
   float percentage = (violCount/restCount) * 100;
-  manhattan = new Borough((int) restCount, (int) violCount, percentage);
+  float recentPercentage = (recentCount/violCount) * 100;
+  manhattan = new Borough((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage);
   println("There are " + (int) restCount + " restaurants in Manhattan and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
   println();
 }
@@ -521,6 +533,7 @@ void searchManhattan() {
 void searchQueens() {
   float violCount = 0;
   float restCount = 0;
+  float recentCount = 0;
   for (Restaurants r: restList) {
     float inspectionTime = r.restDate.getTime();
     if (r.boroCode.equals("4")) {
@@ -528,16 +541,21 @@ void searchQueens() {
       for (Violcodes v: violList) {
         float startRange = v.violStartDate.getTime();
         float endRange = v.violEndDate.getTime();
+        float recentEpoch = isRecent.getTime();
         if (r.violCode.equals(v.violCode)) {
           if (inspectionTime >= startRange && inspectionTime <= endRange) {
             violCount++;
+             if (inspectionTime >= recentEpoch) {
+              recentCount++;
+            }
           }
         }
       }
     }
   }
   float percentage = (violCount/restCount) * 100;
-  queens = new Borough((int) restCount, (int) violCount, percentage);
+  float recentPercentage = (recentCount/violCount) * 100;
+  queens = new Borough((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage);
   println("There are " + (int) restCount + " restaurants in Queens and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
   println();
 }
@@ -545,6 +563,7 @@ void searchQueens() {
 void searchBrooklyn() {
   float violCount = 0;
   float restCount = 0;
+  float recentCount = 0;
   for (Restaurants r: restList) {
     float inspectionTime = r.restDate.getTime();
     if (r.boroCode.equals("3")) {
@@ -552,16 +571,21 @@ void searchBrooklyn() {
       for (Violcodes v: violList) {
         float startRange = v.violStartDate.getTime();
         float endRange = v.violEndDate.getTime();
+        float recentEpoch = isRecent.getTime();
         if (r.violCode.equals(v.violCode)) {
           if (inspectionTime >= startRange && inspectionTime <= endRange) {
             violCount++;
+             if (inspectionTime >= recentEpoch) {
+              recentCount++;
+            }
           }
         }
       }
     }
   }
   float percentage = (violCount/restCount) * 100;
-  brooklyn = new Borough((int) restCount, (int) violCount, percentage);
+  float recentPercentage = (recentCount/violCount) * 100;
+  brooklyn = new Borough((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage);
   println("There are " + (int) restCount + " restaurants in Brooklyn and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
   println();
 }
@@ -569,6 +593,7 @@ void searchBrooklyn() {
 void searchBronx() {
   float violCount = 0;
   float restCount = 0;
+  float recentCount = 0;
   for (Restaurants r: restList) {
     float inspectionTime = r.restDate.getTime();
     if (r.boroCode.equals("2")) {
@@ -576,23 +601,29 @@ void searchBronx() {
       for (Violcodes v: violList) {
         float startRange = v.violStartDate.getTime();
         float endRange = v.violEndDate.getTime();
+        float recentEpoch = isRecent.getTime();
         if (r.violCode.equals(v.violCode)) {
           if (inspectionTime >= startRange && inspectionTime <= endRange) {
             violCount++;
+             if (inspectionTime >= recentEpoch) {
+              recentCount++;
+            }
           }
         }
       }
     }
   }
   float percentage = (violCount/restCount) * 100;
-  bronx = new Borough((int) restCount, (int) violCount, percentage);
-  println("There are " + (int) restCount + " restaurants in the Bronx and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
+  float recentPercentage = (recentCount/violCount) * 100;
+  bronx = new Borough((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage);
+  println("There are " + (int) restCount + " restaurants in The Bronx and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
   println();
 }
 
 void searchSI() {
   float violCount = 0;
   float restCount = 0;
+  float recentCount = 0;
   for (Restaurants r: restList) {
     float inspectionTime = r.restDate.getTime();
     if (r.boroCode.equals("5")) {
@@ -600,17 +631,28 @@ void searchSI() {
       for (Violcodes v: violList) {
         float startRange = v.violStartDate.getTime();
         float endRange = v.violEndDate.getTime();
+        float recentEpoch = isRecent.getTime();
         if (r.violCode.equals(v.violCode)) {
           if (inspectionTime >= startRange && inspectionTime <= endRange) {
             violCount++;
+             if (inspectionTime >= recentEpoch) {
+              recentCount++;
+            }
           }
         }
       }
     }
   }
   float percentage = (violCount/restCount) * 100;
-  SI = new Borough((int) restCount, (int) violCount, percentage);
+  float recentPercentage = (recentCount/violCount) * 100;
+  SI = new Borough((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage);
   println("There are " + (int) restCount + " restaurants in Staten Island and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
   println();
+}
+
+// decimal rounding function
+
+float fixDec(float n, int d) {
+  return Float.parseFloat(String.format("%." + d + "f", n));
 }
 
