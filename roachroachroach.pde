@@ -5,6 +5,7 @@
 // Valerie Chen convinced me to keep working on this 
 // instead of printing out miniature restaurant bar areas like an insane person!
 
+// cockroach base dimensions 120x160 roughly
 
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -17,6 +18,8 @@ ArrayList<Violcodes> violList = new ArrayList();
 
 //BufferedReader reader;
 //PrintWriter writer;
+
+PShape cockroach;
 
 // Fonts
 PFont menuFont;
@@ -51,8 +54,8 @@ void setup() {
   menuFont = createFont("AvenirNext-UltraLight", 24);
   headerFont = createFont("AvenirNext-UltraLight", 36);
   bigNumbers = createFont("AvenirNext", 90);
-  //menuFont = createFont("AvenirNextCondensed-UltraLight", 24);
-
+  cockroach = loadShape("roach.svg");
+ 
   dataBools.put("aData", false);
   dataBools.put("bData", false);
   dataBools.put("cData", false);
@@ -145,7 +148,10 @@ void setup() {
 
 
 void draw() {
-  background(0);
+   background(0);
+  cockroach.disableStyle();
+  fill(255);
+  //shape(cockroach, 400, 400, 120, 160);
   textSense();
 }
 
