@@ -48,8 +48,6 @@ String checkRecent = "12-01-2012";
 Date isRecent;
 // float recentEpoch;
 
-// debugging for cockroach movement
-boolean debug = true;
 
 void setup() {
   size(1280, 720, P3D);
@@ -58,7 +56,7 @@ void setup() {
   menuFont = createFont("AvenirNext-UltraLight", 24);
   headerFont = createFont("AvenirNext-UltraLight", 36);
   bigNumbers = createFont("AvenirNext", 90);
- roach = new Roach((int)random(width/2,width),(int)random(0,height));
+  roach = new Roach((int)random(width/2, width), (int)random(0, height));
   dataBools.put("aData", false);
   dataBools.put("bData", false);
   dataBools.put("cData", false);
@@ -147,13 +145,13 @@ void setup() {
   searchBronx();
   searchSI();
   textInit();
-  
-  roach = new Roach((int)random(width/2,width),(int)random(0,height));
+
+  roach = new Roach((int)random(width/2, width), (int)random(0, height));
 }
 
 
 void draw() {
-   background(0);
+  background(0);
   textSense();
   roach.wander();
   roach.run();
@@ -343,7 +341,6 @@ void textSense() {
 
 void mouseClicked() {
   mouseClicked = true;
-  debug = !debug;
 }
 //
 //void displayBoolsOff() {
@@ -398,7 +395,7 @@ void searchAgrade() {
   float recentPercentage = (recentCount/violCount) * 100;
   int cockroachNumber = round(percentage);
   int sizeRatio = round(map(recentPercentage, 0, 100, 0, cockroachNumber));
-  gradeA = new Grade((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage);
+  gradeA = new Grade((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage, cockroachNumber, sizeRatio);
   println("There are " + (int) restCount + " A-graded establishments and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
   println((int) recentCount + " of these violations occurred within the past year. This is " + recentPercentage + "% of all violations for this group.");
   println(cockroachNumber + " cockroaches should go in this scene. " + sizeRatio + " of them should be large.");
@@ -432,7 +429,7 @@ void searchBgrade() {
   float recentPercentage = (recentCount/violCount) * 100;
   int cockroachNumber = round(percentage);
   int sizeRatio = round(map(recentPercentage, 0, 100, 0, cockroachNumber));
-  gradeB = new Grade((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage);
+  gradeB = new Grade((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage, cockroachNumber, sizeRatio);
   println("There are " + (int) restCount + " B-graded establishments and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
   println((int)recentCount + " of these violations occurred within the past year. This is " + recentPercentage + "% of all violations for this group.");
   println(cockroachNumber + " cockroaches should go in this scene. " + sizeRatio + " of them should be large.");
@@ -466,7 +463,7 @@ void searchCgrade() {
   float recentPercentage = (recentCount/violCount) * 100;
   int cockroachNumber = round(percentage);
   int sizeRatio = round(map(recentPercentage, 0, 100, 0, cockroachNumber));
-  gradeC = new Grade((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage);
+  gradeC = new Grade((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage, cockroachNumber, sizeRatio);
   println("There are " + (int) restCount + " C-graded establishments and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
   println((int) recentCount + " of these violations occurred within the past year. This is " + recentPercentage + "% of all violations for this group.");
   println(cockroachNumber + " cockroaches should go in this scene. " + sizeRatio + " of them should be large.");
@@ -500,7 +497,7 @@ void searchGradePending() {
   float recentPercentage = (recentCount/violCount) * 100;
   int cockroachNumber = round(percentage);
   int sizeRatio = round(map(recentPercentage, 0, 100, 0, cockroachNumber));
-  gradeP = new Grade((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage);
+  gradeP = new Grade((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage, cockroachNumber, sizeRatio);
   println("There are " + (int) restCount + " Grade Pending establishments and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
   println((int) recentCount + " of these violations occurred within the past year. This is " + recentPercentage + "% of all violations for this group.");
   println(cockroachNumber + " cockroaches should go in this scene. " + sizeRatio + " of them should be large.");
@@ -526,7 +523,7 @@ void searchManhattan() {
         if (r.violCode.equals(v.violCode)) {
           if (inspectionTime >= startRange && inspectionTime <= endRange) {
             violCount++;
-             if (inspectionTime >= recentEpoch) {
+            if (inspectionTime >= recentEpoch) {
               recentCount++;
             }
           }
@@ -536,7 +533,9 @@ void searchManhattan() {
   }
   float percentage = (violCount/restCount) * 100;
   float recentPercentage = (recentCount/violCount) * 100;
-  manhattan = new Borough((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage);
+  int cockroachNumber = round(percentage);
+  int sizeRatio = round(map(recentPercentage, 0, 100, 0, cockroachNumber));
+  manhattan = new Borough((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage, cockroachNumber, sizeRatio);
   println("There are " + (int) restCount + " restaurants in Manhattan and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
   println();
 }
@@ -556,7 +555,7 @@ void searchQueens() {
         if (r.violCode.equals(v.violCode)) {
           if (inspectionTime >= startRange && inspectionTime <= endRange) {
             violCount++;
-             if (inspectionTime >= recentEpoch) {
+            if (inspectionTime >= recentEpoch) {
               recentCount++;
             }
           }
@@ -566,7 +565,9 @@ void searchQueens() {
   }
   float percentage = (violCount/restCount) * 100;
   float recentPercentage = (recentCount/violCount) * 100;
-  queens = new Borough((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage);
+  int cockroachNumber = round(percentage);
+  int sizeRatio = round(map(recentPercentage, 0, 100, 0, cockroachNumber));
+  queens = new Borough((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage, cockroachNumber, sizeRatio);
   println("There are " + (int) restCount + " restaurants in Queens and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
   println();
 }
@@ -586,7 +587,7 @@ void searchBrooklyn() {
         if (r.violCode.equals(v.violCode)) {
           if (inspectionTime >= startRange && inspectionTime <= endRange) {
             violCount++;
-             if (inspectionTime >= recentEpoch) {
+            if (inspectionTime >= recentEpoch) {
               recentCount++;
             }
           }
@@ -596,7 +597,9 @@ void searchBrooklyn() {
   }
   float percentage = (violCount/restCount) * 100;
   float recentPercentage = (recentCount/violCount) * 100;
-  brooklyn = new Borough((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage);
+  int cockroachNumber = round(percentage);
+  int sizeRatio = round(map(recentPercentage, 0, 100, 0, cockroachNumber));
+  brooklyn = new Borough((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage, cockroachNumber, sizeRatio);
   println("There are " + (int) restCount + " restaurants in Brooklyn and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
   println();
 }
@@ -616,7 +619,7 @@ void searchBronx() {
         if (r.violCode.equals(v.violCode)) {
           if (inspectionTime >= startRange && inspectionTime <= endRange) {
             violCount++;
-             if (inspectionTime >= recentEpoch) {
+            if (inspectionTime >= recentEpoch) {
               recentCount++;
             }
           }
@@ -626,7 +629,9 @@ void searchBronx() {
   }
   float percentage = (violCount/restCount) * 100;
   float recentPercentage = (recentCount/violCount) * 100;
-  bronx = new Borough((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage);
+  int cockroachNumber = round(percentage);
+  int sizeRatio = round(map(recentPercentage, 0, 100, 0, cockroachNumber));
+  bronx = new Borough((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage, cockroachNumber, sizeRatio);
   println("There are " + (int) restCount + " restaurants in The Bronx and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
   println();
 }
@@ -646,7 +651,7 @@ void searchSI() {
         if (r.violCode.equals(v.violCode)) {
           if (inspectionTime >= startRange && inspectionTime <= endRange) {
             violCount++;
-             if (inspectionTime >= recentEpoch) {
+            if (inspectionTime >= recentEpoch) {
               recentCount++;
             }
           }
@@ -656,7 +661,9 @@ void searchSI() {
   }
   float percentage = (violCount/restCount) * 100;
   float recentPercentage = (recentCount/violCount) * 100;
-  SI = new Borough((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage);
+  int cockroachNumber = round(percentage);
+  int sizeRatio = round(map(recentPercentage, 0, 100, 0, cockroachNumber));
+  SI = new Borough((int) restCount, (int) violCount, (int) recentCount, percentage, recentPercentage, cockroachNumber, sizeRatio);
   println("There are " + (int) restCount + " restaurants in Staten Island and " + (int) violCount + " of them have vermin violations. " + percentage + "% ratio.");
   println();
 }

@@ -2,6 +2,8 @@ class Grade {
   int restTotal;
   int restViol;
   int recentViol;
+  int cockroach;
+  int sizeRatio;
   float recentPercentage;
   float percentage;
   int counter1, counter2 = 0;
@@ -10,12 +12,14 @@ class Grade {
   int titleOpacity =0;
 
 
-  Grade(int t_total, int t_viol, int t_recent, float t_percentage, float t_recentPercent) {
+  Grade(int t_total, int t_viol, int t_recent, float t_percentage, float t_recentPercent, int t_cockroach, int t_ratio) {
     restTotal = t_total;
     restViol = t_viol;
     recentViol = t_recent;
     percentage = fixDec(t_percentage, 2);
     recentPercentage = fixDec(t_recentPercent, 2);
+    cockroach = t_cockroach;
+    sizeRatio = t_ratio;
   }
 
   void displayData(String grade, String hashmapKey) {

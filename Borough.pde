@@ -2,6 +2,8 @@ class Borough {
   int restTotal;
   int restViol;
   int recentViol;
+  int cockroach;
+  int sizeRatio;
   float percentage;
   float recentPercentage;
 
@@ -12,12 +14,15 @@ class Borough {
 
 
 
-  Borough(int t_total, int t_viol, int t_recent, float t_percentage, float t_recentPercent) {
+  Borough(int t_total, int t_viol, int t_recent, float t_percentage, float t_recentPercent, int t_cockroach, int t_ratio) {
     restTotal = t_total;
     restViol = t_viol;
     recentViol = t_recent;
     percentage = fixDec(t_percentage, 2);
     recentPercentage = fixDec(t_recentPercent, 2);
+    cockroach = t_cockroach;
+    sizeRatio = t_ratio;
+    
   }
 
 

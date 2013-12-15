@@ -60,7 +60,7 @@ class Roach {
     seek(target);
 
     // Render wandering circle, etc. 
-    if (debug) drawWanderStuff(location, circleloc, target, wanderR);
+    drawWanderStuff(location, circleloc, target, wanderR);
   }  
 
   void applyForce(PVector force) {
@@ -87,14 +87,13 @@ class Roach {
   void display() {
     // Draw a cockroach rotated in the direction of velocity
     float theta = velocity.heading2D() + radians(90);
-    fill(127);
     stroke(0);
     pushMatrix();
     pushStyle();
     translate(location.x, location.y);
     rotate(theta);
     cockroach.disableStyle();
-    fill(100);
+    fill(255,175);
     shapeMode(CENTER);
     shape(cockroach, 0, 0, 120, 160);
     popMatrix();
@@ -113,12 +112,14 @@ class Roach {
 
 // A method just to draw the circle associated with wandering
 void drawWanderStuff(PVector location, PVector circle, PVector target, float rad) {
-  stroke(0); 
+ pushStyle();
+  noStroke();
   noFill();
   ellipseMode(CENTER);
   ellipse(circle.x, circle.y, rad*2, rad*2);
   ellipse(target.x, target.y, 4, 4);
   line(location.x, location.y, circle.x, circle.y);
   line(circle.x, circle.y, target.x, target.y);
+  popStyle();
 }
 
