@@ -4,6 +4,8 @@
 // Sam Brenner helped with nested menus that no longer exist!
 // Valerie Chen convinced me to keep working on this 
 // instead of printing out miniature restaurant bar areas like an insane person!
+// Dan Shiffman for his public Nature of Code examples that I adapted slightly!
+
 
 // cockroach base dimensions 120x160 roughly
 
@@ -19,8 +21,6 @@ ArrayList<Violcodes> violList = new ArrayList();
 //BufferedReader reader;
 //PrintWriter writer;
 
-PShape cockroach;
-
 // Fonts
 PFont menuFont;
 PFont bigNumbers;
@@ -32,6 +32,8 @@ long lastClickTime = 0;
 Grade gradeA, gradeB, gradeC, gradeP;
 Borough manhattan, queens, brooklyn, bronx, SI;
 textButton gradeTitle, boroughTitle, gradeAbutton, gradeBbutton, gradeCbutton, gradePbutton, manhattanbutton, queensbutton, brooklynbutton, bronxbutton, SIbutton;
+Roach roach;
+
 
 boolean gradeBool, boroughBool, aBool, bBool, cBool, pBool, manhattanBool, queensBool, brooklynBool, bronxBool, SIBool;
 boolean mouseBufferOK = false;
@@ -46,6 +48,8 @@ String checkRecent = "12-01-2012";
 Date isRecent;
 // float recentEpoch;
 
+// debugging for cockroach movement
+boolean debug = true;
 
 void setup() {
   size(1280, 720, P3D);
@@ -54,8 +58,7 @@ void setup() {
   menuFont = createFont("AvenirNext-UltraLight", 24);
   headerFont = createFont("AvenirNext-UltraLight", 36);
   bigNumbers = createFont("AvenirNext", 90);
-  cockroach = loadShape("roach.svg");
- 
+ roach = new Roach((int)random(width/2,width),(int)random(0,height));
   dataBools.put("aData", false);
   dataBools.put("bData", false);
   dataBools.put("cData", false);
@@ -144,15 +147,16 @@ void setup() {
   searchBronx();
   searchSI();
   textInit();
+  
+  roach = new Roach((int)random(width/2,width),(int)random(0,height));
 }
 
 
 void draw() {
    background(0);
-  cockroach.disableStyle();
-  fill(255);
-  //shape(cockroach, 400, 400, 120, 160);
   textSense();
+  roach.wander();
+  roach.run();
 }
 
 // Text functions
@@ -339,6 +343,7 @@ void textSense() {
 
 void mouseClicked() {
   mouseClicked = true;
+  debug = !debug;
 }
 //
 //void displayBoolsOff() {
