@@ -21,7 +21,7 @@ class Roach {
     location = new PVector(x, y);
     r = 6;
     wandertheta = 0;
-    maxspeed = 2;
+    maxspeed = 1.5;
     maxforce = 0.05;
     cockroach = loadShape("roach.svg");
     roachWidth = t_width;
