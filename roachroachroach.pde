@@ -7,7 +7,7 @@
 // Dan Shiffman for his public Nature of Code examples that I adapted slightly!
 
 
-// cockroach base dimensions 120x160 roughly
+// cockroach base dimensions 120x160 roughly (large)
 
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -18,22 +18,16 @@ Table violations;
 ArrayList<Restaurants> restList = new ArrayList();
 ArrayList<Violcodes> violList = new ArrayList();
 
-//BufferedReader reader;
-//PrintWriter writer;
-
 // Fonts
 PFont menuFont;
 PFont bigNumbers;
 PFont headerFont;
-
 
 long lastClickTime = 0;
 
 Grade gradeA, gradeB, gradeC, gradeP;
 Borough manhattan, queens, brooklyn, bronx, SI;
 textButton gradeTitle, boroughTitle, gradeAbutton, gradeBbutton, gradeCbutton, gradePbutton, manhattanbutton, queensbutton, brooklynbutton, bronxbutton, SIbutton;
-Roach roach;
-
 
 boolean gradeBool, boroughBool, aBool, bBool, cBool, pBool, manhattanBool, queensBool, brooklynBool, bronxBool, SIBool;
 boolean mouseBufferOK = false;
@@ -56,7 +50,6 @@ void setup() {
   menuFont = createFont("AvenirNext-UltraLight", 24);
   headerFont = createFont("AvenirNext-UltraLight", 36);
   bigNumbers = createFont("AvenirNext", 90);
-  roach = new Roach((int)random(width/2, width), (int)random(0, height));
   dataBools.put("aData", false);
   dataBools.put("bData", false);
   dataBools.put("cData", false);
@@ -146,15 +139,15 @@ void setup() {
   searchSI();
   textInit();
 
-  roach = new Roach((int)random(width/2, width), (int)random(0, height));
+  //roach = new Roach((int)random(width/2, width), (int)random(0, height));
 }
 
 
 void draw() {
   background(0);
   textSense();
-  roach.wander();
-  roach.run();
+  //roach.wander();
+  //roach.run();
 }
 
 // Text functions
@@ -297,73 +290,11 @@ void textSense() {
   SI.displayData("Staten Island", "SIData");
 
   mouseClicked = false;
-  // mouseBufferOK = false;
 }
-
-
-
-//  // control the "by grade" category
-//  if (byGrade.mouse && mouseBufferOK) {
-//    // clicking "by grade" while its already active turns its submenu back off
-//    if (gradeBool == true) gradeBool = false;
-//    // if it's not active already, turn the submenu on
-//    else {
-//      displayBoolsOff();
-//      gradeBool = true;
-//    }
-//  } 
-//
-//  else if (byBorough.mouse && mouseBufferOK) {
-//    if (boroughBool == true) boroughBool = false;
-//    else {
-//      displayBoolsOff();
-//      boroughBool = true;
-//    }
-//  }
-//
-//// if "by grade" was clicked, display the submenu options
-//  if (gradeBool) {
-//    gradeA.write();
-//    gradeB.write();
-//    gradeC.write();
-//    gradeP.write();
-//  }
-//
-//  else if (boroughBool) {
-//    manhattan.write();
-//    queens.write();
-//    brooklyn.write();
-//    bronx.write();
-//    SI.write();
-//  }
-//}
-//
 
 void mouseClicked() {
   mouseClicked = true;
 }
-//
-//void displayBoolsOff() {
-//  boroughBool = false;
-//  gradeBool = false;
-//  
-//  for (int i = 0; i < displayBools.length; i++) {
-//    displayBools[i] = false;
-//  }
-//}
-//
-//void gradeBoolsOff() {
-//  for (int i = 0; i < gradeBools.length; i++) {
-//    gradeBools[i] = false;
-//  }
-//}
-//
-//void boroughBoolsOff() {
-//  for (int i = 0; i < boroughBools.length; i++) {
-//    boroughBools[i] = false;
-//  }
-
-
 
 
 // Grade searching functions

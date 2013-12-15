@@ -10,6 +10,8 @@ class Grade {
   float counter3, counter4 = 0;
   int opacity= 0;
   int titleOpacity =0;
+  Roach[] roachArray = new Roach[25];
+  Roach[] smallRoachArray = new Roach[25];
 
 
   Grade(int t_total, int t_viol, int t_recent, float t_percentage, float t_recentPercent, int t_cockroach, int t_ratio) {
@@ -20,6 +22,12 @@ class Grade {
     recentPercentage = fixDec(t_recentPercent, 2);
     cockroach = t_cockroach;
     sizeRatio = t_ratio;
+    for (int i=0; i < roachArray.length; i++) {
+      roachArray[i] = new Roach((int)random(width/2, width), (int)random(0, height), 120, 160, 190);
+    }
+    for (int i=0; i < smallRoachArray.length; i++) {
+      smallRoachArray[i] = new Roach((int)random(width/2, width), (int)random(0, height), 60, 80, 130);
+    } 
   }
 
   void displayData(String grade, String hashmapKey) {
@@ -27,8 +35,8 @@ class Grade {
     if (dataTrigger) {
       counter3 = fixDec(counter3, 2);
       counter4 = fixDec(counter4, 2);
-     
-     // style for big numbers
+
+      // style for big numbers
       pushStyle();
       textFont(bigNumbers);
       fill(255, 159, 3);
@@ -48,10 +56,10 @@ class Grade {
       if (counter3 > percentage) counter3 = percentage;
       if (counter4 > recentPercentage) counter4 = recentPercentage;
 
-//style for other text
+      //style for other text
       pushStyle();
       textFont(headerFont);
-      fill(255,titleOpacity);
+      fill(255, titleOpacity);
       text(grade + ":", 35, 55);
       textFont(menuFont);
       fill(255, opacity);
@@ -64,7 +72,17 @@ class Grade {
       if (titleOpacity < 255) titleOpacity +=4;
       if (opacity > 160) opacity = 160;
       if (titleOpacity > 255) titleOpacity = 255;
-      
+
+      // instantiate correct number of large roaches (sizeRatio)
+      for (int i = 0; i < sizeRatio; i++) {
+        roachArray[i].wander();
+        roachArray[i].run();
+      }
+      // instantiate correct number of small roaches (cockroach - sizeRatio)
+      for (int i = 0; i < (cockroach - sizeRatio); i++) {
+        smallRoachArray[i].wander();
+        smallRoachArray[i].run();
+      }
     }
     if (!dataTrigger) {
       counter1 = 0;

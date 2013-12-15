@@ -10,8 +10,11 @@ class Roach {
   float wandertheta;
   float maxforce;    // Maximum steering force
   float maxspeed;    // Maximum speed
+  int roachWidth;
+  int roachHeight;
+  int alpha;
 
-    Roach(float x, float y) {
+    Roach(float x, float y, int t_width, int t_height, int t_alpha) {
     acceleration = new PVector(0, 0);
     velocity = new PVector(0, 0);
     location = new PVector(x, y);
@@ -20,6 +23,9 @@ class Roach {
     maxspeed = 2;
     maxforce = 0.05;
     cockroach = loadShape("roach.svg");
+    roachWidth = t_width;
+    roachHeight = t_height;
+    alpha = t_alpha;
   }
 
   void run() {
@@ -93,9 +99,9 @@ class Roach {
     translate(location.x, location.y);
     rotate(theta);
     cockroach.disableStyle();
-    fill(255,175);
+    fill(255,alpha);
     shapeMode(CENTER);
-    shape(cockroach, 0, 0, 120, 160);
+    shape(cockroach, 0, 0, roachWidth, roachHeight);
     popMatrix();
     popStyle();
   }

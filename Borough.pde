@@ -11,6 +11,8 @@ class Borough {
   float counter3, counter4 = 0;
   int opacity =0;
   int titleOpacity = 0;
+  Roach[] roachArray = new Roach[25];
+  Roach[] smallRoachArray = new Roach[25];
 
 
 
@@ -22,7 +24,12 @@ class Borough {
     recentPercentage = fixDec(t_recentPercent, 2);
     cockroach = t_cockroach;
     sizeRatio = t_ratio;
-    
+     for (int i=0; i < roachArray.length; i++) {
+      roachArray[i] = new Roach((int)random(width/2, width), (int)random(0, height), 120, 160, 190);
+    }  
+    for (int i=0; i < smallRoachArray.length; i++) {
+      smallRoachArray[i] = new Roach((int)random(width/2, width), (int)random(0, height), 60, 80, 130);
+    } 
   }
 
 
@@ -67,6 +74,17 @@ class Borough {
       if (titleOpacity < 255) titleOpacity +=4;
       if (opacity > 160) opacity = 160;
       if (titleOpacity > 255) titleOpacity = 255;
+      
+      // instantiate correct number of large roaches (sizeRatio)
+      for (int i = 0; i < sizeRatio; i++) {
+        roachArray[i].wander();
+        roachArray[i].run();
+      }
+      // instantiate correct number of small roaches (cockroach - sizeRatio)
+      for (int i = 0; i < (cockroach - sizeRatio); i++) {
+        smallRoachArray[i].wander();
+        smallRoachArray[i].run();
+      }
     }
     if (!dataTrigger) {
       counter1 = 0;
