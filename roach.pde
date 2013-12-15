@@ -50,6 +50,8 @@ class Roach {
     circleloc.normalize();            // Normalize to get heading
     circleloc.mult(wanderD);          // Multiply by distance
     circleloc.add(location);               // Make it relative to boid's location
+    if (circleloc.x > width) circleloc.x = width;  //constrain circle to right half of screen
+    if (circleloc.x < width/2) circleloc.x = width/2;
 
       float h = velocity.heading2D();        // We need to know the heading to offset wandertheta
 
@@ -92,7 +94,7 @@ class Roach {
     translate(location.x, location.y);
     rotate(theta);
     cockroach.disableStyle();
-    fill(255);
+    fill(100);
     shapeMode(CENTER);
     shape(cockroach, 0, 0, 120, 160);
     popMatrix();
@@ -100,10 +102,10 @@ class Roach {
   }
 
   // Wraparound
-  void borders() {
-    if (location.x < -r) location.x = width+r;
+    void borders() {
+    if (location.x < width/2) location.x = width/2; // constrain roach to right half of screen
     if (location.y < -r) location.y = height+r;
-    if (location.x > width+r) location.x = -r;
+    if (location.x > width) location.x = width; // same thing
     if (location.y > height+r) location.y = -r;
   }
 }
