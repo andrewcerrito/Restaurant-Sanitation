@@ -13,6 +13,7 @@ class Roach {
   int roachWidth;
   int roachHeight;
   int alpha;
+  int alphaCounter;
 
     Roach(float x, float y, int t_width, int t_height, int t_alpha) {
     acceleration = new PVector(0, 0);
@@ -99,11 +100,14 @@ class Roach {
     translate(location.x, location.y);
     rotate(theta);
     cockroach.disableStyle();
-    fill(255,alpha);
+    fill(255,alphaCounter);
     shapeMode(CENTER);
     shape(cockroach, 0, 0, roachWidth, roachHeight);
     popMatrix();
     popStyle();
+    
+    if (alphaCounter < alpha) alphaCounter += random(1.6,3.2);
+    if (alphaCounter > alpha) alphaCounter = alpha;
   }
 
   // Wraparound

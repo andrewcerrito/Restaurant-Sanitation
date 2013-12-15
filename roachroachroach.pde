@@ -44,7 +44,7 @@ Date isRecent;
 
 
 void setup() {
-  size(1280, 720, P3D);
+  size(displayWidth,displayHeight, P3D);
   background(0);
   smooth(2);
   menuFont = createFont("AvenirNext-UltraLight", 24);
@@ -156,7 +156,7 @@ void textInit() {
   // text height
   int th = height-25;
   // left margin
-  int left = 40;
+  int left = 50;
   // spacer for letter grades
   int s = 70;
 
@@ -166,12 +166,19 @@ void textInit() {
   gradeBbutton = new textButton("B", left+210, th);
   gradeCbutton = new textButton("C", left+270, th);
   gradePbutton = new textButton("Grade Pending", left+330, th);
-  boroughTitle = new textButton("By borough:", left+560, th); 
-  manhattanbutton = new textButton("Manhattan", left+730, th);
-  queensbutton = new textButton("Queens", left+870, th);
-  brooklynbutton = new textButton("Brooklyn", left+980, th);
-  bronxbutton = new textButton("Bronx", left+1100, th);
-  SIbutton = new textButton("SI", left+1190, th);
+//  boroughTitle = new textButton("By borough:", left+560, th); 
+//  manhattanbutton = new textButton("Manhattan", left+730, th);
+//  queensbutton = new textButton("Queens", left+870, th);
+//  brooklynbutton = new textButton("Brooklyn", left+980, th);
+//  bronxbutton = new textButton("Bronx", left+1100, th);
+//  SIbutton = new textButton("SI", left+1190, th);
+
+boroughTitle = new textButton("By borough:",displayWidth-680, th); 
+  manhattanbutton = new textButton("Manhattan", displayWidth-510, th);
+  queensbutton = new textButton("Queens", displayWidth-370, th);
+  brooklynbutton = new textButton("Brooklyn", displayWidth-260, th);
+  bronxbutton = new textButton("Bronx", displayWidth-140, th);
+  SIbutton = new textButton("SI", displayWidth-50, th);
 }
 
 

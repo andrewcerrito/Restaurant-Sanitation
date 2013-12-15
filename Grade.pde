@@ -61,12 +61,16 @@ class Grade {
       textFont(headerFont);
       fill(255, titleOpacity);
       text(grade + ":", 35, 55);
+      text("Legend: ", 35, displayHeight-200);
       textFont(menuFont);
       fill(255, opacity);
       text("total restaurants in this grade level.", 115, 210);
       text("restaurants cited for vermin violations.", 115, 350);
       text("percentage ratio of vermin violations.", 115, 490);
       text("of these violations were within the past year.", 115, 630);
+      text("Every cockroach on the right represents", 115, displayHeight-160);
+      text("one percentage point of the violation ratio.", 115, displayHeight-130);
+      text("Large cockroaches represent more recent offenses.", 115, displayHeight-100);
       popStyle();
       if (opacity < 160) opacity +=3;
       if (titleOpacity < 255) titleOpacity +=4;
@@ -91,6 +95,13 @@ class Grade {
       counter4 = 0;
       opacity = 0;
       titleOpacity = 0;
+      for (int i = 0; i < sizeRatio; i++) {
+        roachArray[i].alphaCounter = 0;
+      }
+      for (int i = 0; i < (cockroach - sizeRatio); i++) {
+        smallRoachArray[i].alphaCounter = 0;
+       
+      }
     }
   }
 
