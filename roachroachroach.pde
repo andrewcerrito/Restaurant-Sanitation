@@ -154,7 +154,7 @@ void draw() {
 
 void textInit() {
   // text height
-  int th = height-25;
+  int th = height-35;
   // left margin
   int left = 50;
   // spacer for letter grades
